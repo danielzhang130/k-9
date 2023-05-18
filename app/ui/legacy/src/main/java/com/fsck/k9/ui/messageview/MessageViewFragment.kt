@@ -94,6 +94,8 @@ class MessageViewFragment :
     private var isActive: Boolean = false
         private set
 
+    private var isTempTheme = false
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -139,6 +141,9 @@ class MessageViewFragment :
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val messageViewThemeResourceId = themeManager.messageViewThemeResourceId
+        if (themeManager.messageViewTheme != themeManager.appTheme) {
+            isTempTheme = true
+        }
         val themedContext = ContextThemeWrapper(inflater.context, messageViewThemeResourceId)
         val layoutInflater = LayoutInflater.from(themedContext)
 
@@ -211,6 +216,9 @@ class MessageViewFragment :
     }
 
     override fun onDestroy() {
+        if (isTempTheme) {
+            themeManager.resetMessageTheme()
+        }
         super.onDestroy()
 
         if (requireActivity().isChangingConfigurations) {

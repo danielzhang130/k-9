@@ -90,6 +90,10 @@ class ThemeManager(
         }
     }
 
+    fun resetMessageTheme() {
+        generalSettingsManager.setMessageViewTheme(SubTheme.USE_GLOBAL)
+    }
+
     private fun getSubThemeResourceId(subTheme: SubTheme): Int = when (subTheme) {
         SubTheme.LIGHT -> themeProvider.appLightThemeResourceId
         SubTheme.DARK -> themeProvider.appDarkThemeResourceId
